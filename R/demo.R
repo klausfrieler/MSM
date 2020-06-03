@@ -24,7 +24,7 @@ BDS_demo <- function(num_items = 3L,
                      admin_password = "demo",
                      researcher_email = "longgold@gold.uc.ak",
                      dict = BDS::BDS_dict,
-                     language = "EN",
+                     language = c("EN", "DE"),
                      ...) {
   elts <- psychTestR::join(
     BDS_welcome_page(dict = dict),

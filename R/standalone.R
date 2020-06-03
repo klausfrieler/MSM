@@ -57,7 +57,7 @@ BDS_standalone  <- function(title = NULL,
   )
   if(is.null(title)){
     #extract title as named vector from dictionary
-    title <- dict$translate("TESTNAME", languages)
+    title <- dict$translate("TESTNAME", languages[1])
   }
 
   psychTestR::make_test(
@@ -66,5 +66,5 @@ BDS_standalone  <- function(title = NULL,
                                    admin_password = admin_password,
                                    researcher_email = researcher_email,
                                    demo = FALSE,
-                                   languages = languages))
+                                   languages = languages[1]))
 }
