@@ -46,12 +46,12 @@ get_stimulus <- function(item, item_number, num_items_in_test, training = FALSE)
 get_answer <- function(correct_answer){
   gaf <-
     function(input, ...) {
-      #messagef("Calling get_answer function with correct answer '%s'", correct_answer)
+      messagef("Calling get_answer function with correct answer '%s'", correct_answer)
       tibble(raw = input$pos_seq,
             correct_answer = correct_answer,
             correct =  input$pos_seq == correct_answer)
     }
-  #messagef("Generated get_answer function with correct answer '%s' (0x%s, ca = 0x%s)", correct_answer, data.table::address(gaf), data.table::address(correct_answer))
+  messagef("Generated get_answer function with correct answer '%s' (0x%s, ca = 0x%s)", correct_answer, data.table::address(gaf), data.table::address(correct_answer))
   return(gaf)
 }
 
@@ -66,7 +66,7 @@ create_test_pages <- function(num_items_in_test) {
     stimulus <- get_stimulus(item, item_number, num_items_in_test)
     label <- paste0("q", item_number)
     correct_answer <- item$answer
-    #messagef("Created item with %s, %d", correct_answer, nchar(correct_answer))
+    #printf("Created item with %s, %d", correct_answer, nchar(correct_answer))
     #browser()
     item <- BDS_page(label = label,
                      stimulus = stimulus,
