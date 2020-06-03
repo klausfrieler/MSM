@@ -1,7 +1,7 @@
-#' EDT languages
+#' BDS languages
 #'
-#' Lists the languages available for EDT implementations.
+#' Lists the languages available for BDS implementations.
 #' @export
-EDT_languages <- function() {
+BDS_languages <- function() {
   c("EN", "DE")
 }

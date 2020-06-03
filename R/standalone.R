@@ -9,7 +9,10 @@ debug_locally <- !grepl("shiny-server", getwd())
 #' This can be used for data collection, either in the laboratory or online.
 #' @param title (Scalar character) Title to display during testing.
 #' @param num_items (Scalar integer) Number of items to be adminstered.
-#' @param with_feedback (Scalar boolean) Indicates if performance feedback will be given at the end of the test. Defaults to  FALSE
+#' @param with_id (Logical scalar) Whether to show a ID page.
+#' @param feedback (Function) Defines the feedback to give the participant
+#' at the end of the test.
+#' @param with_welcome (Logical scalar) Whether to show a welcome page.
 #' @param admin_password (Scalar character) Password for accessing the admin panel.
 #' @param researcher_email (Scalar character)
 #' If not \code{NULL}, this researcher's email address is displayed
@@ -27,7 +30,7 @@ debug_locally <- !grepl("shiny-server", getwd())
 BDS_standalone  <- function(title = NULL,
                            num_items = 18L,
                            with_id = TRUE,
-                           with_feedback = FALSE,
+                           feedback = BDS::BDS_feedback_with_graph(),
                            with_welcome = TRUE,
                            admin_password = "conifer",
                            researcher_email = "longgold@gold.uc.ak",
@@ -35,11 +38,7 @@ BDS_standalone  <- function(title = NULL,
                            dict = BDS::BDS_dict,
                            validate_id = "auto",
                            ...) {
-  feedback <- NULL
-  if(with_feedback) {
-    feedback <- BDS::BDS_feedback_with_graph()
-    #feedback <- BDS::BDS_feedback_with_score()
-  }
+
   elts <- psychTestR::join(
     if(with_id)
       psychTestR::new_timeline(

@@ -24,3 +24,6 @@ NULL
 
 #' @importFrom methods "is"
 NULL
+
+#' @importFrom stats "dnorm"
+NULL

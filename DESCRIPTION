@@ -4,14 +4,13 @@ Title: Backward Digit Span
 Version: 0.1.0
 Author: Klaus Frieler
 Maintainer: Klaus Frieler <kf@omniversum.de>
-Description: Implementation of backward digit span test
+Description: Implementation of backward digit span test.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Depends: 
-    R (>= 3.3.0),
+    R (>= 3.5.0),
 Imports:
-    psychTestRCAT (>= 1.5.0),
     psychTestR (>= 2.4.3),
     shiny (>= 1.2.0),
     methods,
@@ -23,5 +22,5 @@ Imports:
 Suggests:
     codetools,
     devtools (>= 1.13.6)
-Remotes: pmcharrison/psychTestR, pmcharrison/psychTestRCAT
+Remotes: pmcharrison/psychTestR
 RoxygenNote: 7.0.2

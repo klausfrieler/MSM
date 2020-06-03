@@ -8,16 +8,14 @@ The BDS is working memeoy test using backward recall of sequences of digits.
 ## Citation
 
 We also advise mentioning the software versions you used,
-in particular the versions of the `BDS`, `psychTestR`, and `psychTestRCAT` packages.
+in particular the versions of the `BDS` and `psychTestR` packages.
 You can find these version numbers from R by running the following commands:
 
 ``` r
 library(BDS)
-library(psychTestR)
-library(psychTestRCAT)
 if (!require(devtools)) install.packages("devtools")
 x <- devtools::session_info()
-x$packages[x$packages$package %in% c("BDS", "psychTestR", "psychTestRCAT"), ]
+x$packages[x$packages$package %in% c("BDS", "psychTestR"), ]
 ```
 
 ## Installation instructions (local use)

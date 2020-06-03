@@ -8,7 +8,7 @@ BDS_standalone(
   title = NULL,
   num_items = 18L,
   with_id = TRUE,
-  with_feedback = FALSE,
+  feedback = BDS::BDS_feedback_with_graph(),
   with_welcome = TRUE,
   admin_password = "conifer",
   researcher_email = "longgold@gold.uc.ak",
@@ -23,7 +23,12 @@ BDS_standalone(
 
 \item{num_items}{(Scalar integer) Number of items to be adminstered.}
 
-\item{with_feedback}{(Scalar boolean) Indicates if performance feedback will be given at the end of the test. Defaults to  FALSE}
+\item{with_id}{(Logical scalar) Whether to show a ID page.}
+
+\item{feedback}{(Function) Defines the feedback to give the participant
+at the end of the test.}
+
+\item{with_welcome}{(Logical scalar) Whether to show a welcome page.}
 
 \item{admin_password}{(Scalar character) Password for accessing the admin panel.}
 
