@@ -39,7 +39,7 @@ BDS_demo <- function(num_items = 3L,
 
   psychTestR::make_test(
     elts,
-    opt = psychTestR::test_options(title = dict$translate("TESTNAME", language),
+    opt = psychTestR::test_options(title = dict$translate("TESTNAME", language[1]),
                                    admin_password = admin_password,
                                    researcher_email = researcher_email,
                                    demo = TRUE,

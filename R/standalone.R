@@ -66,5 +66,5 @@ BDS_standalone  <- function(title = NULL,
                                    admin_password = admin_password,
                                    researcher_email = researcher_email,
                                    demo = FALSE,
-                                   languages = languages[1]))
+                                   languages = languages))
 }

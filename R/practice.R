@@ -10,6 +10,8 @@ practice <- function() {
     stimulus <- get_stimulus(BDS_sample_items[i,], i, 2, training = T)
     #browser()
     correct_answer <- BDS_sample_items[i,]$answer
+    #messagef("Correct answer '%s' (0x%s)", correct_answer, data.table::address(correct_answer))
+
     on_complete <-    function(state, answer, ...){
       #browser()
       psychTestR::set_global(key = "last_correct", value = answer$correct[1], state = state)
