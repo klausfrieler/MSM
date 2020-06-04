@@ -2,7 +2,7 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1415363.svg)](https://doi.org/10.5281/zenodo.1415363)
 
-The BDS is working memeoy test using backward recall of sequences of digits.
+The BDS is working memory test using backward recall of sequences of digits.
 
 
 ## Citation
