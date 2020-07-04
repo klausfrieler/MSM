@@ -23,8 +23,8 @@ scoring <- function(){
 get_stimulus <- function(item, item_number, num_items_in_test, training = FALSE) {
   timeout <- nchar(item$answer[1]) * 1500 + 500
   #test_items = "http://media.gold-msi.org/test_materials/BDS/tasks"
-  shiny::addResourcePath("www", base::system.file("www", package = "BDS"))
-  test_items_path <- "www/img"
+  shiny::addResourcePath("www_BDS", base::system.file("www", package = "BDS"))
+  test_items_path <- "www_BDS/img"
   onload_handler <-sprintf("setTimeout(function(){document.getElementById('prompt').style.visibility = 'inherit';document.getElementById('pos_seq').value = '';document.getElementById('pos_seq').style.backgroundColor ='#ffffff'}, %s)", timeout)
   if(training){
     progress_text <- psychTestR::i18n("SAMPLE_HEADER", sub = list("num_example" = item_number))
