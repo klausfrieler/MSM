@@ -34,7 +34,7 @@ BDS_standalone  <- function(title = NULL,
                            with_welcome = TRUE,
                            admin_password = "conifer",
                            researcher_email = "longgold@gold.uc.ak",
-                           languages = c("EN", "DE"),
+                           languages = c("en", "de"),
                            dict = BDS::BDS_dict,
                            validate_id = "auto",
                            ...) {
@@ -57,7 +57,8 @@ BDS_standalone  <- function(title = NULL,
   )
   if(is.null(title)){
     #extract title as named vector from dictionary
-    title <- dict$translate("TESTNAME", languages[1])
+    title <- dict$translate("TESTNAME", tolower(languages[1]))
+
   }
 
   psychTestR::make_test(
@@ -66,5 +67,5 @@ BDS_standalone  <- function(title = NULL,
                                    admin_password = admin_password,
                                    researcher_email = researcher_email,
                                    demo = FALSE,
-                                   languages = languages))
+                                   languages = tolower(languages)))
 }

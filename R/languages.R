@@ -3,5 +3,5 @@
 #' Lists the languages available for BDS implementations.
 #' @export
 BDS_languages <- function() {
-  c("EN", "DE")
+  c("en", "de")
 }
