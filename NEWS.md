@@ -1,3 +1,4 @@
-# BDS 0.1.0
 
-* First release
+# MSM 0.1.0
+
+* First draft
