@@ -2,7 +2,6 @@
 
 export(MSM)
 export(MSM_demo)
-export(MSM_dict)
 export(MSM_languages)
 export(MSM_standalone)
 importFrom(dplyr,"%>%")

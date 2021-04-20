@@ -3,7 +3,6 @@
 #' The default internationalisation dictionary used by the MSM
 #' @name MSM_dict
 #' @docType data
-#' @export
 NULL
 
 #' MSM item bank
