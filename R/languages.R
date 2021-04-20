@@ -1,7 +1,7 @@
-#' BDS languages
+#' MSM languages
 #'
-#' Lists the languages available for BDS implementations.
+#' Lists the languages available for MSM implementations.
 #' @export
-BDS_languages <- function() {
+MSM_languages <- function() {
   c("en", "de")
 }

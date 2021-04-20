@@ -1,5 +1,7 @@
-MSM_dict_raw <- readRDS("data_raw/MSM_dict.RDS")
-#names(MSM_dict_raw) <- c("key", "DE", "EN")
-MSM_dict_raw <- MSM_dict_raw[,c("key", "EN", "DE")]
-MSM_dict <- psychTestR::i18n_dict$new(MSM_dict_raw)
+library(tidyverse)
+
+usethis::use_build_ignore(c("material", "data_raw"))
+
+MSM_dict_raw <- readxl::read_xlsx("data_raw/MSM_dict.xlsx", trim_ws = T)
+MSM_dict <- MSM_dict_raw %>% psychTestR::i18n_dict$new()
 usethis::use_data(MSM_dict, overwrite = TRUE)

@@ -1,6 +1,6 @@
-#' Demo BDS
+#' Demo MSM
 #'
-#' This function launches a demo for the BDS.
+#' This function launches a demo for the MSM.
 #'
 #' @param num_items (Integer scalar) Number of items in the test.
 #' @param feedback (Function) Defines the feedback to give the participant
@@ -16,25 +16,25 @@
 #' @param language The language you want to run your demo in.
 #' Possible languages include English (\code{"en"}) and German (\code{"de"}).
 #' The first language is selected by default
-#' @param ... Further arguments to be passed to \code{\link{BDS}()}.
+#' @param ... Further arguments to be passed to \code{\link{MSM}()}.
 #' @export
 #'
-BDS_demo <- function(num_items = 3L,
-                     feedback = BDS::BDS_feedback_with_score(),
+MSM_demo <- function(num_items = 3L,
+                     feedback = MSM::MSM_feedback_with_score(),
                      admin_password = "demo",
                      researcher_email = "longgold@gold.uc.ak",
-                     dict = BDS::BDS_dict,
+                     dict = MSM::MSM_dict,
                      language = c("en", "de"),
                      ...) {
   elts <- psychTestR::join(
-    BDS_welcome_page(dict = dict),
-    BDS::BDS(num_items = num_items,
+    MSM_welcome_page(dict = dict),
+    MSM::MSM(num_items = num_items,
              with_welcome = FALSE,
              with_training = TRUE,
              feedback = feedback,
              dict = dict,
              ...),
-      BDS_final_page(dict = dict)
+      MSM_final_page(dict = dict)
   )
 
   psychTestR::make_test(
