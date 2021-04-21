@@ -2,7 +2,7 @@ practice <- function(audio_dir = "https://s3-eu-west-1.amazonaws.com/media.dots.
   #browser()
   message("Added practice pages")
   ret <- psychTestR::one_button_page(body = shiny::div(
-    psychTestR::i18n("INTRO_TEXT"),
+    psychTestR::i18n("INSTRUCTIONS"),
     style = "margin-left:15%; margin-right:15%;margin-bottom:20px;text-align:justify"),
     button_text = psychTestR::i18n("CONTINUE"))
 
