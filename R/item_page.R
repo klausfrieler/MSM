@@ -121,6 +121,7 @@ get_audio_ui <- function(url,
     oncanplaythrough = media_js$show_media_btn,
     onplay = paste0(media_js$media_played, media_js$play_media, media_js$hide_media, media_js$hide_media_btn),
     controls = if (show_controls) "controls",
+    controlslist = "nodownload noremoteplayback",
     onended = media_js$media_ended
   )
   if(show_controls){
