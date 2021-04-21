@@ -61,7 +61,6 @@ MSM_standalone  <- function(title = NULL,
     title <- dict$translate("TESTNAME", tolower(languages[1]))
 
   }
-
   psychTestR::make_test(
     elts,
     opt = psychTestR::test_options(title = title,

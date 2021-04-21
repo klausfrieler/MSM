@@ -164,9 +164,12 @@ MSM_page <- function(label,
   stimulus_url <- file.path(audio_dir, stimulus)
   prompt <- get_key_input(stimulus_url)
   get_answer <- function(input, state, ...){
+    #browser()
     tp <- strsplit(input$marker_seq, ",") %>% unlist() %>% as.integer()
+    item_number <- psychTestR::get_local(key = "item_number", state = state)
+    psychTestR::set_local(key = "item_number", value = item_number + 1L , state = state)
     print(tibble(stimulus = stimulus, marker = tp, pos = 1:length(tp)))
-    tibble(stimulus = stimulus, marker = tp, pos = 1:length(tp))
+    tibble(stimulus = stimulus, marker = input$marker_seq, count = length(tp))
   }
   ui <- shiny::div(header, shiny::p(stimulus), prompt)
   psychTestR::page(ui = ui, label = label, get_answer = get_answer,

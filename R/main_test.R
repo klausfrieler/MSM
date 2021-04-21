@@ -26,37 +26,59 @@ get_next_item <- function(item_no, offset){
   item_pool[idz[item_no],]
 }
 
-get_item_sequence <- function(){
+get_item_sequence <- function(seed = NULL){
   #browser()
+  if(!is.null(seed)){
+    set.seed(seed)
+  }
   offset <- sample(0:29, 1)
   purrr::map_dfr(1:30, ~{get_next_item(.x, offset)})  %>%
     mutate(filename = sprintf("part1_%02d%s.wav", id, variant))
 }
 
-create_test_pages <- function(num_items_in_test = 30L, audio_dir = "https://s3-eu-west-1.amazonaws.com/media.dots.org/stimuli/MSM") {
+create_test_pages <- function(num_items_in_test = 30L,
+                              audio_dir = "https://s3-eu-west-1.amazonaws.com/media.dots.org/stimuli/MSM") {
   #browser()
   ret <- c()
-  #num_items_in_test <- 30L
-  item_sequence = get_item_sequence()
+  ret <- psychTestR::code_block(function(state, ...){
+    #browser()
+    seed <-  psychTestR::get_session_info(state, complete = F)$p_id %>%
+      digest::sha1() %>%
+      charToRaw() %>%
+      as.integer() %>%
+      sum()
+    messagef("Code block, seed %d", seed)
+    item_sequence = get_item_sequence(seed)
+    psychTestR::set_local(key = "item_sequence", value = item_sequence[1:num_items_in_test,], state = state)
+    psychTestR::set_local(key = "item_number", value = 1L, state = state)
+
+  })
   for(item_number in 1:num_items_in_test){
-    stimulus <- item_sequence[item_number,]$filename
-    header <- get_header(item_number, num_items_in_test)
-    label <- paste0("q", item_number)
 
     #printf("Created item with %s, %d", correct_answer, nchar(correct_answer))
     #browser()
-    item <- MSM_page(label = label,
-                     stimulus = stimulus,
-                     header = header,
-                     audio_dir = audio_dir,
-                     save_answer = TRUE)
+    item <- psychTestR::reactive_page(function(state, ...) {
+      #browser()
+      item_sequence <- psychTestR::get_local("item_sequence", state)
+      item_number <- psychTestR::get_local("item_number", state)
+      stimulus <- item_sequence[item_number,]$filename
+      header <- get_header(item_number, num_items_in_test)
+      label <- paste0("q", item_number)
+      messagef("Called reactive page, item_number %d", item_number)
+
+      MSM_page(label = label,
+               stimulus = stimulus,
+               header = header,
+               audio_dir = audio_dir,
+               save_answer = TRUE)
+    })
     ret <- c(ret, item)
   }
-  #browser()
   ret
 }
 
-main_test <- function(num_items_in_test = 30L, audio_dir = "https://s3-eu-west-1.amazonaws.com/media.dots.org/stimuli/MSM") {
+main_test <- function(num_items_in_test = 30L,
+                      audio_dir = "https://s3-eu-west-1.amazonaws.com/media.dots.org/stimuli/MSM") {
   elts <- create_test_pages(num_items_in_test, audio_dir = audio_dir)
   return(elts)
 }
