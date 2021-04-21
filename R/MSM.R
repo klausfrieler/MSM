@@ -31,11 +31,11 @@ MSM <- function(with_welcome = TRUE,
                 dict = MSM::MSM_dict,
                 ...) {
   stopifnot(purrr::is_scalar_character(label))
-
+  #browser()
   psychTestR::join(
     psychTestR::begin_module(label),
     if (with_welcome) MSM_welcome_page(),
-    if (with_training) psychTestR::new_timeline(practice(), dict = dict),
+    if (with_training) psychTestR::new_timeline(practice(audio_dir), dict = dict),
     psychTestR::new_timeline(
       main_test(audio_dir = audio_dir, ...),
       dict = dict),

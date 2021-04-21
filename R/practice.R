@@ -1,41 +1,27 @@
-practice <- function() {
+practice <- function(audio_dir = "https://s3-eu-west-1.amazonaws.com/media.dots.org/stimuli/MSM")  {
+  #browser()
   message("Added practice pages")
   ret <- psychTestR::one_button_page(body = shiny::div(
-    psychTestR::i18n("INSTRUCTIONS"),
+    psychTestR::i18n("INTRO_TEXT"),
     style = "margin-left:15%; margin-right:15%;margin-bottom:20px;text-align:justify"),
     button_text = psychTestR::i18n("CONTINUE"))
 
-  MSM_sample_items <- MSM::MSM_item_bank %>% filter(training == 1)
-  for(i in 1:2){
-    stimulus <- get_stimulus(MSM_sample_items[i,], i, 2, training = T)
-    #browser()
-    correct_answer <- MSM_sample_items[i,]$answer
-    #messagef("Correct answer '%s' (0x%s)", correct_answer, data.table::address(correct_answer))
+  sample_stimuli <- c("100test_changerule.wav", "101test_proximityrule.wav", "102test_control.wav")
 
-    on_complete <-    function(state, answer, ...){
-      #browser()
-      psychTestR::set_global(key = "last_correct", value = answer$correct[1], state = state)
-    }
+  for(i in 1:length(sample_stimuli)){
+    #browser()
+    stimulus <- sample_stimuli[i]
+    header <- get_header(i, length(sample_stimuli), training = T)
+
     label <- paste0("s", i)
-    ex <- MSM_page(label = label,
-                   stimulus = stimulus,
-                   seq_len = nchar(correct_answer),
-                   get_answer = get_answer(correct_answer),
-                   on_complete = on_complete,
-                   save_answer = F)
-    ret <- c(ret, ex)
-    sample_feedback <- psychTestR::reactive_page(function(state, ...) {
-      answer <- ifelse(psychTestR::get_global("last_correct", state), "CORRECT", "INCORRECT")
-      psychTestR::one_button_page(
-        body = psychTestR::i18n(answer),
-        button_text = psychTestR::i18n("CONTINUE")
-      )
-    }
-    )
-    ret <-c(ret, sample_feedback)
+    item <- MSM_page(label = label,
+                     stimulus = stimulus,
+                     header = header,
+                     audio_dir = audio_dir,
+                     save_answer = TRUE)
+    ret <- c(ret, item)
   }
   ret <- c(ret, psychTestR::one_button_page( body = psychTestR::i18n("CONTINUE_MAIN_TEST"),
-                                             button_text = psychTestR::i18n("CONTINUE")
-  ))
+                                             button_text = psychTestR::i18n("CONTINUE")))
   ret
 }

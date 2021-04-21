@@ -27,6 +27,20 @@ if(num_event_listeners == 0) {
   console.log('Added keydown event listener')
 }
 
+String.prototype.toMMSSZZ = function () {
+    var msec_num = parseInt(this, 10); // don't forget the second param
+    var sec_num = Math.floor(msec_num/1000);
+    var milliseconds = msec_num - 1000 * sec_num;
+
+    var hours   = Math.floor(sec_num / 3600);
+    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+    var seconds = sec_num - (hours * 3600) - (minutes * 60);
+    //if (hours   < 10) {hours   = '0' + hours;}
+    //if (minutes < 10) {minutes = '0' + minutes;}
+    //if (seconds < 10) {seconds = '0' + seconds;}
+    return String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0') + '.' + String(milliseconds).padStart(3, '0');
+}
+var give_key_feedback = true;
 function register_key(e) {
   var key = e.which || e.keyCode;
 
@@ -45,8 +59,11 @@ function register_key(e) {
 	}
 	var tp = new Date().getTime() - window.startTime
   time_points.push(tp);
-  console.log('Time: ' + tp)
-  //console.log('Current state: ' + time_points.join(','))
+  //console.log('Time: ' + tp)
+  if(give_key_feedback){
+    marker_count = String(time_points.length).padStart(2, '0')
+    document.getElementById('marker_feedback').innerHTML = 'Marker ' + marker_count + ': ' + String(Math.round(tp)).toMMSSZZ()
+  }
   Shiny.setInputValue('marker_seq', time_points.join(','));
 
 }
@@ -78,6 +95,7 @@ media_mobile_play_button <- shiny::tags$p(
                      style = "visibility: hidden",
                      onclick = media_js$play_media)
 )
+
 get_audio_ui <- function(url,
                          type = tools::file_ext(url),
                          autoplay = FALSE,
@@ -116,17 +134,22 @@ get_audio_ui <- function(url,
 
 get_key_input <- function(stimulus_url){
   #browser()
-  prompt <- shiny::p(psychTestR::i18n("PROMPT"), style = "text-align:justify;width:50%;")
+  prompt <- shiny::div(psychTestR::i18n("PROMPT"), style = "text-align:justify;")
   marker_seq <-   shiny::textInput("marker_seq", label="", value="", width = 100)
-  marker_input <- shiny::div(id = "marker_input", marker_seq)
-  audio_ui <- get_audio_ui(stimulus_url)
+  marker_feedback <- shiny::div(id = "marker_feedback", "Marker: ---", style = "text-align:center")
+  marker_input <- shiny::div(id = "marker_input", marker_seq )
+  audio_ui <- shiny::div(get_audio_ui(stimulus_url), style = "text-align:center")
   script <- shiny::tags$script(shiny::HTML(key_logger_script))
-  ui <- shiny::div(id = "segment_marker", script, prompt, audio_ui, marker_input)
+  #ui <- shiny::div(id = "segment_marker", script, prompt, marker_input, audio_ui)
 
   shiny::div(
-    ui,
-    style = "visibility: visible",
-    id = "prompt"
+    id = "prompt",
+    script,
+    prompt,
+    audio_ui,
+    marker_input,
+    marker_feedback,
+    style = "text-align:justify;width:50%;min-width:500px;visibility: visible"
   )
 }
 
@@ -141,8 +164,8 @@ MSM_page <- function(label,
   stimulus_url <- file.path(audio_dir, stimulus)
   prompt <- get_key_input(stimulus_url)
   get_answer <- function(input, state, ...){
-    print(input$marker_seq)
     tp <- strsplit(input$marker_seq, ",") %>% unlist() %>% as.integer()
+    print(tibble(stimulus = stimulus, marker = tp, pos = 1:length(tp)))
     tibble(stimulus = stimulus, marker = tp, pos = 1:length(tp))
   }
   ui <- shiny::div(header, shiny::p(stimulus), prompt)

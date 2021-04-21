@@ -4,7 +4,8 @@
 get_header <- function(item_number, num_items_in_test, training = FALSE) {
   #onload_handler <-sprintf("setTimeout(function(){document.getElementById('prompt').style.visibility = 'inherit';document.getElementById('pos_seq').value = '';document.getElementById('pos_seq').style.backgroundColor ='#ffffff'}, %s)", timeout)
   if(training){
-    header <- psychTestR::i18n("EXAMPLE_HEADER", sub = list("num_example" = item_number))
+    header <- psychTestR::i18n("EXAMPLE_HEADER", sub = list("example_no" = item_number,
+                                                            "num_example" = num_items_in_test))
   }
   else{
     header <- psychTestR::i18n("PAGE_COUNTER",
@@ -47,6 +48,7 @@ create_test_pages <- function(num_items_in_test = 30L, audio_dir = "https://s3-e
     item <- MSM_page(label = label,
                      stimulus = stimulus,
                      header = header,
+                     audio_dir = audio_dir,
                      save_answer = TRUE)
     ret <- c(ret, item)
   }
