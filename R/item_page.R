@@ -138,7 +138,7 @@ get_key_input <- function(stimulus_url){
   marker_seq <-   shiny::textInput("marker_seq", label="", value="", width = 100)
   marker_feedback <- shiny::div(id = "marker_feedback", "Marker: ---", style = "text-align:center")
   marker_input <- shiny::div(id = "marker_input", marker_seq )
-  audio_ui <- shiny::div(get_audio_ui(stimulus_url), style = "text-align:center")
+  audio_ui <- shiny::div(get_audio_ui(stimulus_url), style = "text-align:center;margin-top:20px;")
   script <- shiny::tags$script(shiny::HTML(key_logger_script))
   #ui <- shiny::div(id = "segment_marker", script, prompt, marker_input, audio_ui)
 
