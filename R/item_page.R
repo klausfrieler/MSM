@@ -185,7 +185,7 @@ MSM_page <- function(label,
 }
 
 inbetween_page <- function(label = "liking", item_number, prompt = "LIKING_PROMPT"){
-  labels <- map_chr(sprintf("LIKERT%d", 1:6), psychTestR::i18n)
+  labels <- purrr::map_chr(sprintf("LIKERT%d", 1:6), psychTestR::i18n)
   choices <- as.character(1:6)
   label <-sprintf("%s%d", label, item_number)
   prompt <- psychTestR::i18n(prompt)
