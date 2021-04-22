@@ -36,7 +36,7 @@ get_item_sequence <- function(seed = NULL){
     mutate(filename = sprintf("part1_%02d%s.wav", id, variant))
 }
 
-create_test_pages <- function(num_items_in_test = 30L,
+create_test_pages <- function(num_items_in_test = 10L,
                               audio_dir = "https://s3-eu-west-1.amazonaws.com/media.dots.org/stimuli/MSM") {
   #browser()
   ret <- c()
@@ -66,18 +66,21 @@ create_test_pages <- function(num_items_in_test = 30L,
       label <- paste0("q", item_number)
       messagef("Called reactive page, item_number %d", item_number)
 
-      MSM_page(label = label,
-               stimulus = stimulus,
-               header = header,
-               audio_dir = audio_dir,
-               save_answer = TRUE)
+        MSM_page(label = label,
+                 stimulus = stimulus,
+                 header = header,
+                 audio_dir = audio_dir,
+                 save_answer = TRUE)
     })
-    ret <- c(ret, item)
+    ret <- c(ret,
+             item,
+             inbetween_page(item_number = item_number, prompt = "DIFFICULTY_PROMPT", label = "difficult"),
+             inbetween_page(item_number = item_number, prompt = "LIKING_PROMPT", label = "liking"))
   }
   ret
 }
 
-main_test <- function(num_items_in_test = 30L,
+main_test <- function(num_items_in_test = 10L,
                       audio_dir = "https://s3-eu-west-1.amazonaws.com/media.dots.org/stimuli/MSM") {
   elts <- create_test_pages(num_items_in_test, audio_dir = audio_dir)
   return(elts)
