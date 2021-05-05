@@ -1,5 +1,5 @@
-library(tidyverse)
-library(psychTestR)
+#library(tidyverse)
+#library(psychTestR)
 #source("R/options.R")
 #source("R/main_test.R")
 #source("R/item_page.R")
@@ -27,17 +27,24 @@ MSM <- function(with_welcome = TRUE,
                 with_training = TRUE,
                 with_finish = TRUE,
                 label = "MSM",
+                type =  "PART1",
                 audio_dir = "https://s3-eu-west-1.amazonaws.com/media.dots.org/stimuli/MSM",
                 dict = MSM::MSM_dict,
                 ...) {
+  if(!(type %in% c("PART1", "PART2"))){
+    stop(sprintf("Found unknown test type %s", type))
+  }
+  if(type == "PART2"){
+    with_training <- F
+  }
   stopifnot(purrr::is_scalar_character(label))
   #browser()
   psychTestR::join(
     psychTestR::begin_module(label),
     if (with_welcome) MSM_welcome_page(),
-    if (with_training) psychTestR::new_timeline(practice(audio_dir), dict = dict),
+    if (with_training) psychTestR::new_timeline(practice(audio_dir, type), dict = dict),
     psychTestR::new_timeline(
-      main_test(audio_dir = audio_dir, ...),
+      main_test(audio_dir = audio_dir, type = type, ...),
       dict = dict),
     psychTestR::elt_save_results_to_disk(complete = TRUE),
     #psychTestR::code_block(function(state, ...){

@@ -134,9 +134,15 @@ get_audio_ui <- function(url,
 }
 
 
-get_key_input <- function(stimulus_url){
+get_key_input <- function(stimulus_url, credits = ""){
   #browser()
   prompt <- shiny::div(psychTestR::i18n("PROMPT"), style = "text-align:justify;")
+  if(nchar(credits) > 0){
+    prompt <- shiny::div(shiny::p(psychTestR::i18n("PROMPT")),
+                         shiny::p(credits, style = "font-size:x-small;font-style:normal"),
+                         style = "text-align:justify;")
+
+  }
   marker_seq <-   shiny::textInput("marker_seq", label="", value="", width = 100)
   marker_feedback <- shiny::div(id = "marker_feedback", "", style = "text-align:left;min-height:1em;")
   marker_input <- shiny::div(id = "marker_input", marker_seq )
@@ -159,12 +165,13 @@ MSM_page <- function(label,
                      stimulus,
                      header,
                      audio_dir = "https://s3-eu-west-1.amazonaws.com/media.dots.org/stimuli/MSM",
+                     credits = "",
                      save_answer = TRUE,
                      admin_ui = NULL) {
   #browser()
   stopifnot(is.scalar.character(label))
   stimulus_url <- file.path(audio_dir, stimulus)
-  prompt <- get_key_input(stimulus_url)
+  prompt <- get_key_input(stimulus_url, credits)
   get_answer <- function(input, state, ...){
     #browser()
     tp <- strsplit(input$marker_seq, ",") %>% unlist() %>% as.integer()
@@ -174,7 +181,7 @@ MSM_page <- function(label,
     tibble(stimulus = stimulus, marker = input$marker_seq, count = length(tp))
   }
   ui <- shiny::div(header,
-                   shiny::p(stimulus),
+                   # shiny::p(stimulus),
                    prompt,
                    psychTestR::trigger_button(inputId = "next", psychTestR::i18n("CONTINUE"), style = "visibility:hidden"))
 
@@ -185,7 +192,7 @@ MSM_page <- function(label,
 }
 
 inbetween_page <- function(label = "liking", item_number, prompt = "LIKING_PROMPT"){
-  labels <- purrr::map_chr(sprintf("LIKERT%d", 1:6), psychTestR::i18n)
+  labels <- purrr::map_chr(sprintf("NUM_LIKERT%d", 1:6), psychTestR::i18n)
   choices <- as.character(1:6)
   label <-sprintf("%s%d", label, item_number)
   prompt <- psychTestR::i18n(prompt)
@@ -193,6 +200,8 @@ inbetween_page <- function(label = "liking", item_number, prompt = "LIKING_PROMP
                         prompt = prompt,
                         choices = choices,
                         labels = labels,
-                        save_answer = T, button_style = "min-width:200px")
+                        save_answer = T,
+                        arrange_vertically = FALSE,
+                        button_style = "min-width:50px")
 }
 

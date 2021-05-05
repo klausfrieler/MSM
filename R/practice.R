@@ -1,8 +1,10 @@
-practice <- function(audio_dir = "https://s3-eu-west-1.amazonaws.com/media.dots.org/stimuli/MSM")  {
+practice <- function(audio_dir = "https://s3-eu-west-1.amazonaws.com/media.dots.org/stimuli/MSM", type)  {
   #browser()
-  message("Added practice pages")
+  messagef("Added practice pages for type '%s'", type)
+  stim_desc <-  psychTestR::i18n(sprintf("%s_STIMULUS_DESCRIPTION", type))
+
   ret <- psychTestR::one_button_page(body = shiny::div(
-    psychTestR::i18n("INSTRUCTIONS"),
+    psychTestR::i18n("INSTRUCTIONS", sub = list(stimulus_description = stim_desc)),
     style = "margin-left:15%; margin-right:15%;margin-bottom:20px;text-align:justify"),
     button_text = psychTestR::i18n("CONTINUE"))
 

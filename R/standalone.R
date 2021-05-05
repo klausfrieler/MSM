@@ -29,8 +29,9 @@ debug_locally <- !grepl("shiny-server", getwd())
 MSM_standalone  <- function(title = NULL,
                             with_id = FALSE,
                             with_welcome = TRUE,
-                            with_training = FALSE,
+                            with_training = TRUE,
                             with_finish = TRUE,
+                            type = "PART1",
                             admin_password = "conifer",
                             researcher_email = "klaus.frieler@ae.mpg.de",
                             languages = c("en", "de"),
@@ -38,7 +39,6 @@ MSM_standalone  <- function(title = NULL,
                             audio_dir = "https://s3-eu-west-1.amazonaws.com/media.dots.org/stimuli/MSM",
                             validate_id = "auto",
                            ...) {
-
   elts <- psychTestR::join(
     if(with_id)
       psychTestR::new_timeline(
@@ -52,6 +52,7 @@ MSM_standalone  <- function(title = NULL,
       with_finish = FALSE,
       audio_dir = audio_dir,
       dict = dict,
+      type = type,
       ...),
     psychTestR::elt_save_results_to_disk(complete = TRUE),
     MSM_final_page(dict = dict)
