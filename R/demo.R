@@ -3,8 +3,6 @@
 #' This function launches a demo for the MSM.
 #'
 #' @param num_items (Integer scalar) Number of items in the test.
-#' @param feedback (Function) Defines the feedback to give the participant
-#' at the end of the test. Defaults to a graph-based feedback page.
 #' @param admin_password (Scalar character) Password for accessing the admin panel.
 #' Defaults to \code{"demo"}.
 #' @param researcher_email (Scalar character)
@@ -20,7 +18,6 @@
 #' @export
 #'
 MSM_demo <- function(num_items = 3L,
-                     feedback = MSM::MSM_feedback_with_score(),
                      admin_password = "demo",
                      researcher_email = "longgold@gold.uc.ak",
                      dict = MSM::MSM_dict,
@@ -31,7 +28,6 @@ MSM_demo <- function(num_items = 3L,
     MSM::MSM(num_items = num_items,
              with_welcome = FALSE,
              with_training = TRUE,
-             feedback = feedback,
              dict = dict,
              ...),
       MSM_final_page(dict = dict)

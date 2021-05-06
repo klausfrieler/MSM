@@ -23,7 +23,7 @@ num_event_listeners = Object.keys(window._getEventListeners()).length
 console.log('Num event listeners: ' + num_event_listeners)
 
 if(num_event_listeners == 0) {
-  window.addEventListener('keydown', register_key);
+  window.addEventListener('keydown', register_key, true);
   console.log('Added keydown event listener')
 }
 
@@ -202,6 +202,6 @@ inbetween_page <- function(label = "liking", item_number, prompt = "LIKING_PROMP
                         labels = labels,
                         save_answer = T,
                         arrange_vertically = FALSE,
-                        button_style = "min-width:50px")
+                        button_style = "min-width:100px")
 }
 

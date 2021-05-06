@@ -109,10 +109,12 @@ MSM_welcome_page <- function(dict = MSM::MSM_dict){
 }
 
 MSM_finished_page <- function(dict = MSM::MSM_dict){
+  script <- 'window.removeEventListener("keydown", register_key);console.log("Removed keydown listener")'
   psychTestR::new_timeline(
     psychTestR::one_button_page(
       body = shiny::div(
         shiny::div(psychTestR::i18n("THANK_YOU"),
+                   shiny::tags$script(shiny::HTML(script)),
                    style = "margin-left:0%;display:block;margin-bottom:30px"),
         button_text = psychTestR::i18n("CONTINUE")
       )
@@ -120,7 +122,7 @@ MSM_finished_page <- function(dict = MSM::MSM_dict){
 }
 
 MSM_final_page <- function(dict = MSM::MSM_dict){
-  script <- 'window.removeEventListener("keydown", register_key);console.log("Removed keydown listener")'
+  script <- 'window.removeEventListener("keydown", register_key, true);console.log("Removed keydown listener")'
   psychTestR::new_timeline(
     psychTestR::final_page(
       body = shiny::div(
