@@ -26,6 +26,7 @@
 MSM <- function(with_welcome = TRUE,
                 with_training = TRUE,
                 with_finish = TRUE,
+                finish_type = "FINISHED_CONT",
                 label = "MSM",
                 type =  "PART1",
                 audio_dir = "https://s3-eu-west-1.amazonaws.com/media.dots.org/stimuli/MSM",
@@ -38,6 +39,10 @@ MSM <- function(with_welcome = TRUE,
     with_training <- F
   }
   stopifnot(purrr::is_scalar_character(label))
+  if(!(finish_type %in% c("FINISHED", "FINISHED_CONT"))){
+    stop(sprintf("Found unknown finish type %s", finish_type))
+
+  }
   #browser()
   psychTestR::join(
     psychTestR::begin_module(label),
@@ -51,6 +56,6 @@ MSM <- function(with_welcome = TRUE,
     #  restults <- psychTestR::get_results(state, complete = F)
     #  browser()
     #}),
-    if(with_finish) MSM_finished_page(),
+    if(with_finish) MSM_finished_page(text_id = finish_type),
     psychTestR::end_module())
 }

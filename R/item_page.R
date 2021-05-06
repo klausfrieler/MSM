@@ -43,7 +43,9 @@ String.prototype.toMMSSZZ = function () {
 var give_key_feedback = true;
 function register_key(e) {
   var key = e.which || e.keyCode;
-
+  if(key != 32){
+    return;
+  }
   if (key === 32) { // spacebar
 
    // eat the spacebar, so it does not stop audio player
@@ -51,11 +53,11 @@ function register_key(e) {
 
   }
   if(media_played == false){
-    return
+    return false;
   }
 	if(media_played == 'over'){
     Shiny.onInputChange('next_page', performance.now());
-  	return
+  	return false;
 	}
 	var tp = new Date().getTime() - window.startTime
   time_points.push(tp);
@@ -69,7 +71,30 @@ function register_key(e) {
 
 }
 "
-
+clean_up_script <- "
+  window.removeEventListener('keydown', register_key, true);
+  console.log('Removed keydown listener');
+  Window.prototype.addEventListener = Window.prototype._addEventListener;
+  console.log('Restored addEventListener');
+"
+MSM_trigger_button <- function(inputId, label, icon = NULL, width = NULL, enable_after = 0, style = "", ...) {
+  checkmate::qassert(enable_after, "N1[0,)")
+  inputId <- htmltools::htmlEscape(inputId, attribute = TRUE)
+  shiny::tagList(
+    shiny::actionButton(
+      inputId = inputId, label = label,
+      icon = icon, width = width,
+      onclick = sprintf("%s;trigger_button(this.id);", clean_up_script),
+      disabled = TRUE,
+      style = style,
+      ...),
+    shiny::tags$script(
+      sprintf("setTimeout(function() {
+                 document.getElementById('%s').disabled = false;
+               }, %i);",
+              inputId, round(enable_after * 1e3))
+    ))
+}
 media_js <- list(
   media_not_played = "var media_played = false;",
   media_played = "media_played = true;",
@@ -183,7 +208,7 @@ MSM_page <- function(label,
   ui <- shiny::div(header,
                    # shiny::p(stimulus),
                    prompt,
-                   psychTestR::trigger_button(inputId = "next", psychTestR::i18n("CONTINUE"), style = "visibility:hidden"))
+                   MSM_trigger_button(inputId = "next", psychTestR::i18n("CONTINUE"), style = "visibility:hidden"))
 
   psychTestR::page(ui = ui, label = label, get_answer = get_answer,
                    save_answer = save_answer, validate = NULL,
@@ -202,6 +227,6 @@ inbetween_page <- function(label = "liking", item_number, prompt = "LIKING_PROMP
                         labels = labels,
                         save_answer = T,
                         arrange_vertically = FALSE,
-                        button_style = "min-width:100px")
+                        button_style = "min-width:75px")
 }
 
