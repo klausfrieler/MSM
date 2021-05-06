@@ -164,7 +164,7 @@ get_key_input <- function(stimulus_url, credits = ""){
   prompt <- shiny::div(psychTestR::i18n("PROMPT"), style = "text-align:justify;")
   if(nchar(credits) > 0){
     prompt <- shiny::div(shiny::p(psychTestR::i18n("PROMPT")),
-                         shiny::p(credits, style = "font-size:x-small;font-style:normal"),
+                         #shiny::p(credits, style = "font-size:x-small;font-style:normal"),
                          style = "text-align:justify;")
 
   }
