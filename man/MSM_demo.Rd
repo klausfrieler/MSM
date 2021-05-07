@@ -6,7 +6,6 @@
 \usage{
 MSM_demo(
   num_items = 3L,
-  feedback = MSM::MSM_feedback_with_score(),
   admin_password = "demo",
   researcher_email = "longgold@gold.uc.ak",
   dict = MSM::MSM_dict,
@@ -16,9 +15,6 @@ MSM_demo(
 }
 \arguments{
 \item{num_items}{(Integer scalar) Number of items in the test.}
-
-\item{feedback}{(Function) Defines the feedback to give the participant
-at the end of the test. Defaults to a graph-based feedback page.}
 
 \item{admin_password}{(Scalar character) Password for accessing the admin panel.
 Defaults to \code{"demo"}.}

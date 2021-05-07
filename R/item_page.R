@@ -1,5 +1,4 @@
 MSM_trigger_button <- function(inputId, label, icon = NULL, width = NULL, enable_after = 0, style = "", ...) {
-  checkmate::qassert(enable_after, "N1[0,)")
   inputId <- htmltools::htmlEscape(inputId, attribute = TRUE)
   shiny::tagList(
     shiny::actionButton(

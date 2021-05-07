@@ -9,9 +9,9 @@ debug_locally <- !grepl("shiny-server", getwd())
 #' @param title (Scalar character) Title to display during testing.
 #' @param num_items (Scalar integer) Number of items to be adminstered.
 #' @param with_id (Logical scalar) Whether to show a ID page.
-#' @param feedback (Function) Defines the feedback to give the participant
-#' at the end of the test.
 #' @param with_welcome (Logical scalar) Whether to show a welcome page.
+#' @param with_training (Logical scalar) Whether to include the training phase.
+#' @param type (character scalar) Which version to show (either PART1 or PART2)
 #' @param admin_password (Scalar character) Password for accessing the admin panel.
 #' @param researcher_email (Scalar character)
 #' If not \code{NULL}, this researcher's email address is displayed
@@ -22,11 +22,13 @@ debug_locally <- !grepl("shiny-server", getwd())
 #' and German (\code{"DE"}).
 #' The first language is selected by default
 #' @param dict The psychTestR dictionary used for internationalisation.
+#' @param audio_dir (URL) The top level URL for audio stimuli
 #' @param validate_id (Character scalar or closure) Function for validating IDs or string "auto" for default validation
 #' which means ID should consist only of  alphanumeric characters.
 #' @param ... Further arguments to be passed to \code{\link{MSM}()}.
 #' @export
 MSM_standalone  <- function(title = NULL,
+                            num_items = 10L,
                             with_id = FALSE,
                             with_welcome = TRUE,
                             with_training = TRUE,

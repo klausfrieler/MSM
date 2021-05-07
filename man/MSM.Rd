@@ -5,27 +5,38 @@
 \title{MSM}
 \usage{
 MSM(
+  num_items = 10L,
   with_welcome = TRUE,
   with_training = TRUE,
   with_finish = TRUE,
+  finish_type = "FINISHED_CONT",
   label = "MSM",
+  type = "PART1",
   audio_dir = "https://s3-eu-west-1.amazonaws.com/media.dots.org/stimuli/MSM",
   dict = MSM::MSM_dict,
   ...
 )
 }
 \arguments{
+\item{num_items}{(Integer scalar) Number of items in the test.}
+
 \item{with_welcome}{(Logical scalar) Whether to show a welcome page.}
 
 \item{with_training}{(Logical scalar) Whether to include the training phase.}
 
 \item{with_finish}{(Logical scalar) Whether to show a finished page.}
 
+\item{finish_type}{(string scalar) Which finish page to show (Either FINISHED or FINISHED_CONT)}
+
 \item{label}{(Character scalar) Label to give the MSM results in the output file.}
+
+\item{type}{(character scalar) Which version to show (either PART1 or PART2)}
+
+\item{audio_dir}{(URL) The top level URL for audio stimuli}
 
 \item{dict}{The psychTestR dictionary used for internationalisation.}
 
-\item{num_items}{(Integer scalar) Number of items in the test.}
+\item{...}{Further arguments to be passed to \code{main_test()}.}
 }
 \description{
 This function defines a MSM  module for incorporation into a

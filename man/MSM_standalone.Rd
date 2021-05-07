@@ -6,10 +6,11 @@
 \usage{
 MSM_standalone(
   title = NULL,
+  num_items = 10L,
   with_id = FALSE,
   with_welcome = TRUE,
-  with_training = FALSE,
-  with_finish = TRUE,
+  with_training = TRUE,
+  type = "PART1",
   admin_password = "conifer",
   researcher_email = "klaus.frieler@ae.mpg.de",
   languages = c("en", "de"),
@@ -22,9 +23,15 @@ MSM_standalone(
 \arguments{
 \item{title}{(Scalar character) Title to display during testing.}
 
+\item{num_items}{(Scalar integer) Number of items to be adminstered.}
+
 \item{with_id}{(Logical scalar) Whether to show a ID page.}
 
 \item{with_welcome}{(Logical scalar) Whether to show a welcome page.}
+
+\item{with_training}{(Logical scalar) Whether to include the training phase.}
+
+\item{type}{(character scalar) Which version to show (either PART1 or PART2)}
 
 \item{admin_password}{(Scalar character) Password for accessing the admin panel.}
 
@@ -40,15 +47,12 @@ The first language is selected by default}
 
 \item{dict}{The psychTestR dictionary used for internationalisation.}
 
+\item{audio_dir}{(URL) The top level URL for audio stimuli}
+
 \item{validate_id}{(Character scalar or closure) Function for validating IDs or string "auto" for default validation
 which means ID should consist only of  alphanumeric characters.}
 
 \item{...}{Further arguments to be passed to \code{\link{MSM}()}.}
-
-\item{num_items}{(Scalar integer) Number of items to be adminstered.}
-
-\item{feedback}{(Function) Defines the feedback to give the participant
-at the end of the test.}
 }
 \description{
 This function launches a standalone testing session for the MSM

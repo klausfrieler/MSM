@@ -20,10 +20,15 @@
 #' @param with_training (Logical scalar) Whether to include the training phase.
 #' @param with_welcome (Logical scalar) Whether to show a welcome page.
 #' @param with_finish (Logical scalar) Whether to show a finished page.
+#' @param finish_type (string scalar) Which finish page to show (Either FINISHED or FINISHED_CONT)
 #' @param label (Character scalar) Label to give the MSM results in the output file.
+#' @param type (character scalar) Which version to show (either PART1 or PART2)
 #' @param dict The psychTestR dictionary used for internationalisation.
+#' @param audio_dir (URL) The top level URL for audio stimuli
+#' @param ... Further arguments to be passed to \code{main_test()}.
 #' @export
-MSM <- function(with_welcome = TRUE,
+MSM <- function(num_items = 10L,
+                with_welcome = TRUE,
                 with_training = TRUE,
                 with_finish = TRUE,
                 finish_type = "FINISHED_CONT",
@@ -35,6 +40,9 @@ MSM <- function(with_welcome = TRUE,
   if(!(type %in% c("PART1", "PART2"))){
     stop(sprintf("Found unknown test type %s", type))
   }
+  if(num_items > 10L){
+    num_items <- 10L
+    }
   if(type == "PART2"){
     with_training <- F
   }
@@ -49,7 +57,7 @@ MSM <- function(with_welcome = TRUE,
     if (with_welcome) MSM_welcome_page(),
     if (with_training) psychTestR::new_timeline(practice(audio_dir, type), dict = dict),
     psychTestR::new_timeline(
-      main_test(audio_dir = audio_dir, type = type, ...),
+      main_test(num_items_in_test = num_items, audio_dir = audio_dir, type = type, ...),
       dict = dict),
     psychTestR::elt_save_results_to_disk(complete = TRUE),
     #psychTestR::code_block(function(state, ...){

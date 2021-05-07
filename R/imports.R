@@ -27,3 +27,6 @@ NULL
 
 #' @importFrom stats "dnorm"
 NULL
+
+#' @importFrom digest "sha1"
+NULL
