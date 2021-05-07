@@ -22,5 +22,5 @@ Imports:
 Suggests:
     codetools,
     devtools (>= 1.13.6)
-Remotes: pmcharrison/psychTestR
+Remotes: klausfrieler/psychTestR
 RoxygenNote: 7.1.1
