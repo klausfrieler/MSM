@@ -32,7 +32,7 @@ get_item_sequence <- function(seed = NULL, type ){
     set.seed(seed)
   }
   if(type == "PART2"){
-    return(tibble(id = 1, variant = NA, filename = "part2_02.wav", credits = psychTestR::i18n("CREDITS")))
+    return(tibble(id = 1, variant = NA, filename = "part2_02.wav", credits = psychTestR::i18n("CREDITS_PART2")))
   }
   offset <- sample(0:29, 1)
   purrr::map_dfr(1:30, ~{get_next_item(.x, offset)})  %>%
