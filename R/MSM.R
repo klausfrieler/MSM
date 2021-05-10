@@ -60,10 +60,10 @@ MSM <- function(num_items = 10L,
       main_test(num_items_in_test = num_items, audio_dir = audio_dir, type = type, ...),
       dict = dict),
     psychTestR::elt_save_results_to_disk(complete = TRUE),
-    #psychTestR::code_block(function(state, ...){
-    #  restults <- psychTestR::get_results(state, complete = F)
-    #  browser()
-    #}),
+    # psychTestR::code_block(function(state, ...){
+    #   results <- psychTestR::get_results(state, complete = F)
+    #   browser()
+    # }),
     if(with_finish) MSM_finished_page(text_id = finish_type),
     psychTestR::end_module())
 }

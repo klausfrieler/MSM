@@ -48,6 +48,7 @@ MSM_standalone  <- function(title = NULL,
                              validate = validate_id),
         dict = dict),
     MSM::MSM(
+      num_items = num_items,
       with_welcome =  with_welcome,
       with_training = with_training,
       with_finish = TRUE,

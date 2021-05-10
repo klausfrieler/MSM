@@ -3,10 +3,12 @@ var time_points = [];
 
 document.getElementById('marker_seq').style.visibility = 'hidden';
 
-window.addEventListener('keydown', register_key, true);
+//window.addEventListener('keydown', register_key, false);
+console.log('onkeydown = ' + window.onkeydown)
+window.onkeypress = register_key
 console.log('Added keydown event listener')
-window.addEventListener('touchdown', register_key, true);
-console.log('Added touchdown event listener')
+//window.addEventListener('touchdown', register_key, false);
+//console.log('Added touchdown event listener')
 
 String.prototype.toMMSSZZ = function () {
     var msec_num = parseInt(this, 10); // don't forget the second param
@@ -23,15 +25,20 @@ String.prototype.toMMSSZZ = function () {
 }
 var give_key_feedback = true;
 function register_key(e) {
+  if(media_played == false){
+    return false;
+  }
+
   var key = e.which || e.keyCode;
   if (key === 32) { // spacebar
 
    // eat the spacebar, so it does not stop audio player
+   console.log('Prevented default media_played = ' + media_played)
+   if(e.stopPropagation){
+    e.stopPropagation()
+   }
    e.preventDefault();
 
-  }
-  if(media_played == false){
-    return false;
   }
 	if(media_played == 'over'){
     Shiny.onInputChange('next_page', performance.now());
@@ -51,10 +58,12 @@ function register_key(e) {
 "
 
 clean_up_script <- "
-  window.removeEventListener('keydown', register_key, true);
+  window.onkeypress = null;
+
+  //window.removeEventListener('keydown', register_key, false);
   console.log('Removed keydown listener');
-  window.removeEventListener('touchdown', register_key, true);
-  console.log('Removed touchdown listener');
+  //window.removeEventListener('touchdown', register_key, false);
+  //console.log('Removed touchdown listener');
 "
 key_logger_script2 <- "
 var time_points = [];

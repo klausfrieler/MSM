@@ -64,17 +64,17 @@ get_audio_ui <- function(url,
     autoplay = if(autoplay) "autoplay",
     width = width,
     loop = if (loop) "loop",
-    oncanplaythrough = media_js$show_media_btn,
+    oncanplaythrough = if(!show_controls) media_js$show_media_btn,
     onplay = paste0(media_js$media_played, media_js$play_media, media_js$hide_media, media_js$hide_media_btn),
     controls = if (show_controls) "controls",
     controlslist = "nodownload noremoteplayback",
     onended = media_js$media_ended
   )
-  if(show_controls){
-    return(shiny::tags$div(audio))
-  }
+  #if(show_controls){
+  #  return(shiny::tags$div(audio))
+  #}
   ret <- shiny::tags$div(media_mobile_play_button, audio)
-  print(ret)
+  #print(ret)
   ret
 }
 
@@ -88,10 +88,10 @@ get_key_input <- function(stimulus_url, credits = ""){
                          style = "text-align:justify;")
 
   }
-  marker_seq <-   shiny::textInput("marker_seq", label="", value="", width = 100)
+  marker_seq <- shiny::textInput("marker_seq", label="", value="", width = 100)
   marker_feedback <- shiny::div(id = "marker_feedback", "", style = "text-align:left;min-height:1em;")
   marker_input <- shiny::div(id = "marker_input", marker_seq )
-  audio_ui <- shiny::div(get_audio_ui(stimulus_url), style = "text-align:center;margin-top:20px;")
+  audio_ui <- shiny::div(get_audio_ui(stimulus_url, show_controls = F), style = "text-align:center;margin-top:20px;")
   script <- shiny::tags$script(shiny::HTML(key_logger_script))
   #ui <- shiny::div(id = "segment_marker", script, prompt, marker_input, audio_ui)
 
@@ -137,9 +137,10 @@ MSM_page <- function(label,
 }
 
 inbetween_page <- function(label = "liking", item_number, prompt = "LIKING_PROMPT"){
-  labels <- purrr::map_chr(sprintf("NUM_LIKERT%d", 1:6), psychTestR::i18n)
+  #labels <- purrr::map_chr(sprintf("NUM_LIKERT%d", 1:6), psychTestR::i18n)
+  labels <- purrr::map_chr(sprintf("LIKERT%d", 1:6), psychTestR::i18n)
   choices <- as.character(1:6)
-  label <-sprintf("%s%d", label, item_number)
+  label <-sprintf("q%d.%s", item_number, label)
   prompt <- psychTestR::i18n(prompt)
   psychTestR::NAFC_page(label = label,
                         prompt = prompt,
