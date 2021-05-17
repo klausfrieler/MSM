@@ -86,6 +86,8 @@ create_test_pages <- function(num_items_in_test = 10L,
              inbetween_page(item_number = item_number, prompt = "DIFFICULTY_PROMPT", label = "difficult"),
              inbetween_page(item_number = item_number, prompt = "LIKING_PROMPT", label = "liking"))
   }
+  #browser()
+
   ret
 }
 
