@@ -20,7 +20,7 @@ practice <- function(audio_dir = "https://s3-eu-west-1.amazonaws.com/media.dots.
                      stimulus = stimulus,
                      header = header,
                      audio_dir = audio_dir,
-                     save_answer = TRUE)
+                     save_answer = FALSE)
     ret <- c(ret, item)
   }
   ret <- c(ret, psychTestR::one_button_page( body = psychTestR::i18n("CONTINUE_MAIN_TEST"),
