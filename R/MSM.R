@@ -43,9 +43,9 @@ MSM <- function(num_items = 10L,
   if(num_items > 10L){
     num_items <- 10L
     }
-  if(type == "PART2"){
-    with_training <- F
-  }
+  #if(type == "PART2"){
+  #  with_training <- F
+  #}
   stopifnot(purrr::is_scalar_character(label))
   if(!(finish_type %in% c("FINISHED", "FINISHED_CONT"))){
     stop(sprintf("Found unknown finish type %s", finish_type))
@@ -55,7 +55,7 @@ MSM <- function(num_items = 10L,
   psychTestR::join(
     psychTestR::begin_module(label),
     if (with_welcome) MSM_welcome_page(),
-    if (with_training) psychTestR::new_timeline(practice(audio_dir, type), dict = dict),
+    if (with_training) psychTestR::new_timeline(practice(audio_dir, type, num_items), dict = dict),
     psychTestR::new_timeline(
       main_test(num_items_in_test = num_items, audio_dir = audio_dir, type = type, ...),
       dict = dict),
