@@ -4,8 +4,14 @@
 get_header <- function(item_number, num_items_in_test, training = FALSE) {
   #onload_handler <-sprintf("setTimeout(function(){document.getElementById('prompt').style.visibility = 'inherit';document.getElementById('pos_seq').value = '';document.getElementById('pos_seq').style.backgroundColor ='#ffffff'}, %s)", timeout)
   if(training){
-    header <- psychTestR::i18n("EXAMPLE_HEADER", sub = list("example_no" = item_number,
-                                                            "num_example" = num_items_in_test))
+    if(num_items_in_test == 1){
+      header <- psychTestR::i18n("EXAMPLE_HEADER_PLAIN")
+
+    }
+    else{
+      header <- psychTestR::i18n("EXAMPLE_HEADER", sub = list("example_no" = item_number,
+                                                              "num_example" = num_items_in_test))
+    }
   }
   else{
     header <- psychTestR::i18n("PAGE_COUNTER",

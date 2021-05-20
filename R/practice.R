@@ -8,7 +8,8 @@ practice <- function(audio_dir = "https://s3-eu-west-1.amazonaws.com/media.dots.
     style = "margin-left:15%; margin-right:15%;margin-bottom:20px;text-align:justify"),
     button_text = psychTestR::i18n("CONTINUE"))
 
-  sample_stimuli <- c("100test_changerule.wav", "101test_proximityrule.wav", "102test_control.wav")
+  #sample_stimuli <- c("100test_changerule.wav", "101test_proximityrule.wav", "102test_control.wav")
+  sample_stimuli <- c("part1_test.wav")
 
   for(i in 1:length(sample_stimuli)){
     #browser()
