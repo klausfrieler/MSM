@@ -97,5 +97,5 @@ read_MSM_data <- function(result_dir = "e:/projects/science/LongGold/development
     #print(ret)
     ret %>% bind_cols(x$session %>% as_tibble()) %>% dplyr::select(p_id, -pilot, -num_restarts, time_ended = current_time, everything())
 
-  }) %>% arrange(time_started)
+  }) %>% dplyr::arrange(time_started)
 }
