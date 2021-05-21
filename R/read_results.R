@@ -6,18 +6,23 @@ parse_MSM_entry <- function(MSM_entry, expand_markers = F){
     return(dummy_MSM)
   }
   if(any(stringr::str_detect(names, "q1.difficult"))){
-    return(dummy_MSM)
+    #return(dummy_MSM)
   }
+  #browser()
   difficulties <- MSM_entry[names[stringr::str_detect(names, "difficult")]] %>% unlist() %>% as.integer()
   likings <- MSM_entry[names[stringr::str_detect(names, "difficult")]] %>% unlist() %>% as.integer()
   stopifnot(length(difficulties) == length(likings))
-  base <- purrr::map_dfr(MSM_entry[names[stringr::str_detect(names, "q[0-9]+")]], function(.x){
+  #browser()
+  base <- purrr::map_dfr(MSM_entry[names[stringr::str_detect(names, "^q[0-9]+$")]], function(.x){
     .x
     })
 
   ret <- dplyr::bind_cols(base, tibble(difficulty = difficulties, liking = likings))
   if(expand_markers){
-    ret <- ret %>% mutate(marker = stringr::str_split(marker, ",")) %>% unnest(marker)
+    ret <- ret %>%
+      mutate(marker = stringr::str_split(marker, ",")) %>%
+      unnest(marker) %>%
+      mutate(marker = as.numeric(marker)/1000)
   }
   ret
 }
@@ -56,7 +61,7 @@ parse_DEG_entry <- function(DEG_entry){
     return(dummy_DEG)
   }
   tibble(gender = c("female", "male", "other", "rather not say")[DEG_entry$Gender],
-         age = DEG_entry$Age)
+         age = DEG_entry$Age/12)
 }
 
 #' read_MSM_data
@@ -90,7 +95,7 @@ read_MSM_data <- function(result_dir = "e:/projects/science/LongGold/development
       ret <- dplyr::bind_cols(ret, dummy_DEG)
     }
     #print(ret)
-    ret %>% mutate(p_id = x$session$p_id) %>% dplyr::select(p_id, everything())
+    ret %>% bind_cols(x$session %>% as_tibble()) %>% dplyr::select(p_id, -pilot, -num_restarts, time_ended = current_time, everything())
 
-  })
+  }) %>% arrange(time_started)
 }
