@@ -21,7 +21,7 @@ parse_MSM_entry <- function(MSM_entry, expand_markers = F){
   if(expand_markers){
     ret <- ret %>%
       mutate(marker = stringr::str_split(marker, ",")) %>%
-      unnest(marker) %>%
+      tidyr::unnest(marker) %>%
       mutate(marker = as.numeric(marker)/1000)
   }
   ret
