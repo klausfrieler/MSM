@@ -10,7 +10,7 @@ parse_MSM_entry <- function(MSM_entry, expand_markers = F){
   }
   #browser()
   difficulties <- MSM_entry[names[stringr::str_detect(names, "difficult")]] %>% unlist() %>% as.integer()
-  likings <- MSM_entry[names[stringr::str_detect(names, "difficult")]] %>% unlist() %>% as.integer()
+  likings <- MSM_entry[names[stringr::str_detect(names, "liking")]] %>% unlist() %>% as.integer()
   stopifnot(length(difficulties) == length(likings))
   #browser()
   base <- purrr::map_dfr(MSM_entry[names[stringr::str_detect(names, "^q[0-9]+$")]], function(.x){
