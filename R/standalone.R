@@ -11,7 +11,7 @@ debug_locally <- !grepl("shiny-server", getwd())
 #' @param with_id (Logical scalar) Whether to show a ID page.
 #' @param with_welcome (Logical scalar) Whether to show a welcome page.
 #' @param with_training (Logical scalar) Whether to include the training phase.
-#' @param type (character scalar) Which version to show (either PART1 or PART2)
+#' @param type (character scalar) Which version to show (either PART1 or PART2-1/PART2-02)
 #' @param admin_password (Scalar character) Password for accessing the admin panel.
 #' @param researcher_email (Scalar character)
 #' If not \code{NULL}, this researcher's email address is displayed

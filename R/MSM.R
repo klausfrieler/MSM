@@ -22,7 +22,7 @@
 #' @param with_finish (Logical scalar) Whether to show a finished page.
 #' @param finish_type (string scalar) Which finish page to show (Either FINISHED or FINISHED_CONT)
 #' @param label (Character scalar) Label to give the MSM results in the output file.
-#' @param type (character scalar) Which version to show (either PART1 or PART2)
+#' @param type (character scalar) Which version to show (either PART1 or PART2-01/PART2-02)
 #' @param dict The psychTestR dictionary used for internationalisation.
 #' @param audio_dir (URL) The top level URL for audio stimuli
 #' @param ... Further arguments to be passed to \code{main_test()}.
@@ -37,15 +37,17 @@ MSM <- function(num_items = 10L,
                 audio_dir = "https://s3-eu-west-1.amazonaws.com/media.dots.org/stimuli/MSM",
                 dict = MSM::MSM_dict,
                 ...) {
-  if(!(type %in% c("PART1", "PART2"))){
+  ptype <- parse_type(type)
+  if(!(ptype[1] %in% c("PART1", "PART2"))){
     stop(sprintf("Found unknown test type %s", type))
+  }
+  if(ptype[1] == "PART2"){
+    num_items <- 1
   }
   if(num_items > 10L){
     num_items <- 10L
-    }
-  #if(type == "PART2"){
-  #  with_training <- F
-  #}
+  }
+
   stopifnot(purrr::is_scalar_character(label))
   if(!(finish_type %in% c("FINISHED", "FINISHED_CONT"))){
     stop(sprintf("Found unknown finish type %s", finish_type))

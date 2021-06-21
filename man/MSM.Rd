@@ -30,7 +30,7 @@ MSM(
 
 \item{label}{(Character scalar) Label to give the MSM results in the output file.}
 
-\item{type}{(character scalar) Which version to show (either PART1 or PART2)}
+\item{type}{(character scalar) Which version to show (either PART1 or PART2-01/PART2-02)}
 
 \item{audio_dir}{(URL) The top level URL for audio stimuli}
 

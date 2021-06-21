@@ -37,9 +37,13 @@ get_item_sequence <- function(seed = NULL, type ){
   if(!is.null(seed)){
     set.seed(seed)
   }
-  if(type == "PART2"){
-    return(tibble(id = 1, variant = NA, filename = "part2_02.wav", credits = psychTestR::i18n("CREDITS_PART2")))
+  type <- parse_type(type)
+  if(type[1] == "PART2"){
+    return(tibble(id = 1, variant = NA,
+                  filename = sprintf("part2_%s.wav", type[2]),
+                  credits = psychTestR::i18n(sprintf("CREDITS_PART2-%s", type[2]))))
   }
+  type <- type[1]
   offset <- sample(0:29, 1)
   purrr::map_dfr(1:30, ~{get_next_item(.x, offset)})  %>%
     mutate(filename = sprintf("part1_%02d%s.wav", id, variant), credits = "")

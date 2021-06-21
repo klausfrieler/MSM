@@ -31,7 +31,7 @@ MSM_standalone(
 
 \item{with_training}{(Logical scalar) Whether to include the training phase.}
 
-\item{type}{(character scalar) Which version to show (either PART1 or PART2)}
+\item{type}{(character scalar) Which version to show (either PART1 or PART2-1/PART2-02)}
 
 \item{admin_password}{(Scalar character) Password for accessing the admin panel.}
 

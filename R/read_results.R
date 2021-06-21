@@ -8,7 +8,6 @@ parse_MSM_entry <- function(MSM_entry, expand_markers = F){
   if(any(stringr::str_detect(names, "q1.difficult"))){
     #return(dummy_MSM)
   }
-  #browser()
   difficulties <- MSM_entry[names[stringr::str_detect(names, "difficult")]] %>% unlist() %>% as.integer()
   likings <- MSM_entry[names[stringr::str_detect(names, "liking")]] %>% unlist() %>% as.integer()
   stopifnot(length(difficulties) == length(likings))
