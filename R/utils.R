@@ -29,3 +29,11 @@ is.null.or <- function(x, f) {
   is.null(x) || f(x)
 }
 
+parse_type <- function(type){
+  tmp <- strsplit(type, "-")[[1]]
+  if(length(tmp) == 1){
+    tmp[2] <- "02"
+  }
+  tmp[1] <- toupper(tmp[1])
+  tmp
+}
